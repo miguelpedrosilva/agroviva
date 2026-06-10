@@ -442,3 +442,306 @@ console.log(
     "✅ AgroViva Parte 1 carregada."
    );
 )
+/* =====================================================
+   MINIGAME AGROVIVA HARVEST
+===================================================== */
+
+const canvas = document.getElementById("gameCanvas");
+
+if (canvas) {
+
+    const ctx = canvas.getContext("2d");
+
+    let score = 0;
+
+    const scoreElement =
+        document.getElementById("score");
+
+    /* ======================================
+       TRATOR
+    ====================================== */
+
+    const trator = {
+
+        x: 350,
+        y: 320,
+
+        largura: 70,
+        altura: 50,
+
+        velocidade: 8
+    };
+
+    /* ======================================
+       ITENS DA COLHEITA
+    ====================================== */
+
+    const emojis = [
+        "🍅",
+        "🥒",
+        "🥬",
+        "🌽",
+        "🥛"
+    ];
+
+    let itens = [];
+
+    function criarItem() {
+
+        itens.push({
+
+            x: Math.random() * 760,
+            y: -30,
+
+            emoji:
+                emojis[
+                    Math.floor(
+                        Math.random() *
+                        emojis.length
+                    )
+                ],
+
+            velocidade:
+                2 + Math.random() * 3
+        });
+
+    }
+
+    /* ======================================
+       CONTROLES
+    ====================================== */
+
+    let esquerda = false;
+    let direita = false;
+
+    document.addEventListener(
+        "keydown",
+        (e) => {
+
+            if (
+                e.key === "ArrowLeft"
+            ) {
+                esquerda = true;
+            }
+
+            if (
+                e.key === "ArrowRight"
+            ) {
+                direita = true;
+            }
+
+        }
+    );
+
+    document.addEventListener(
+        "keyup",
+        (e) => {
+
+            if (
+                e.key === "ArrowLeft"
+            ) {
+                esquerda = false;
+            }
+
+            if (
+                e.key === "ArrowRight"
+            ) {
+                direita = false;
+            }
+
+        }
+    );
+
+    /* ======================================
+       DESENHAR FUNDO
+    ====================================== */
+
+    function desenharFundo() {
+
+        ctx.fillStyle = "#95d5b2";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        ctx.fillStyle = "#52b788";
+
+        ctx.fillRect(
+            0,
+            350,
+            canvas.width,
+            50
+        );
+
+    }
+
+    /* ======================================
+       DESENHAR TRATOR
+    ====================================== */
+
+    function desenharTrator() {
+
+        ctx.font = "50px Arial";
+
+        ctx.fillText(
+            "🚜",
+            trator.x,
+            trator.y
+        );
+
+    }
+
+    /* ======================================
+       DESENHAR ITENS
+    ====================================== */
+
+    function desenharItens() {
+
+        ctx.font = "30px Arial";
+
+        itens.forEach((item) => {
+
+            ctx.fillText(
+                item.emoji,
+                item.x,
+                item.y
+            );
+
+        });
+
+    }
+
+    /* ======================================
+       MOVIMENTO
+    ====================================== */
+
+    function atualizar() {
+
+        if (esquerda) {
+
+            trator.x -=
+                trator.velocidade;
+        }
+
+        if (direita) {
+
+            trator.x +=
+                trator.velocidade;
+        }
+
+        if (trator.x < 0) {
+
+            trator.x = 0;
+        }
+
+        if (trator.x > 740) {
+
+            trator.x = 740;
+        }
+
+        itens.forEach((item, indice) => {
+
+            item.y += item.velocidade;
+
+            /* COLISÃO */
+
+            if (
+
+                item.x >
+                    trator.x - 20 &&
+
+                item.x <
+                    trator.x + 70 &&
+
+                item.y >
+                    trator.y - 20
+
+            ) {
+
+                itens.splice(
+                    indice,
+                    1
+                );
+
+                score += 10;
+
+                if (
+                    scoreElement
+                ) {
+
+                    scoreElement.innerHTML =
+                        score;
+                }
+
+                adicionarPontos(10);
+
+            }
+
+            /* SAIU DA TELA */
+
+            if (
+                item.y >
+                canvas.height
+            ) {
+
+                itens.splice(
+                    indice,
+                    1
+                );
+            }
+
+        });
+
+    }
+
+    /* ======================================
+       LOOP PRINCIPAL
+    ====================================== */
+
+    function loop() {
+
+        desenharFundo();
+
+        atualizar();
+
+        desenharItens();
+
+        desenharTrator();
+
+        requestAnimationFrame(
+            loop
+        );
+
+    }
+
+    /* ======================================
+       SPAWN DOS ITENS
+    ====================================== */
+
+    setInterval(
+        criarItem,
+        1200
+    );
+
+    loop();
+
+    /* ======================================
+       RANKING LOCAL
+    ====================================== */
+
+    window.addEventListener(
+        "beforeunload",
+        () => {
+
+            localStorage.setItem(
+                "agrovivaScore",
+                score
+            );
+
+        }
+    );
+
+}
