@@ -1,4 +1,12 @@
 /* ==================================================
+   FORÇAR O SCROLL PARA O TOPO AO RECARREGAR
+   ================================================== */
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+/* ==================================================
    AGROVIVA - SCRIPT.JS (Lógica Front-End)
    ================================================== */
 
