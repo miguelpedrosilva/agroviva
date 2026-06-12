@@ -10,9 +10,8 @@ let gameLoopId = null;
 let spawnerId = null;
 let nomeAtual = "Anônimo";
 
-// Variáveis de Dificuldade Dinâmica
 let dificuldadeMultiplicador = 1;
-let tempoDeSpawn = 1000; // Tempo em milissegundos para nascer novo item
+let tempoDeSpawn = 1000;
 
 const trator = { x: 265, y: 280, largura: 70, altura: 50, vel: 7 };
 
@@ -29,7 +28,6 @@ document.getElementById("btn-esquerda")?.addEventListener("touchend", () => { es
 document.getElementById("btn-direita")?.addEventListener("touchstart", (e) => { e.preventDefault(); dir = true; });
 document.getElementById("btn-direita")?.addEventListener("touchend", () => { dir = false; });
 
-// --- INICIAR JOGO ---
 document.getElementById("btn-play")?.addEventListener("click", tentarIniciarJogo);
 document.getElementById("btn-restart")?.addEventListener("click", iniciarJogo);
 
@@ -44,7 +42,6 @@ function tentarIniciarJogo() {
 }
 
 function iniciarJogo() {
-    // Reseta todas as variáveis e a dificuldade
     scorePartida = 0;
     itens = [];
     trator.x = 265;
@@ -52,11 +49,9 @@ function iniciarJogo() {
     dificuldadeMultiplicador = 1;
     tempoDeSpawn = 1000;
 
-    // Esconde as telas de overlay
     document.getElementById("tela-start-jogo").style.display = "none";
     document.getElementById("tela-game-over").style.display = "none";
     
-    // Limpa loops anteriores para não bugar
     if (spawnerId) clearTimeout(spawnerId);
     if (gameLoopId) cancelAnimationFrame(gameLoopId);
     
@@ -67,7 +62,6 @@ function iniciarJogo() {
 function loopSpawn() {
     if (gameOver) return;
     criarItem();
-    // Usa setTimeout recursivo para permitir mudança no tempo de spawn
     spawnerId = setTimeout(loopSpawn, tempoDeSpawn);
 }
 
@@ -82,7 +76,6 @@ function criarItem() {
         x: Math.random() * (canvas.width - 40), 
         y: -30, 
         emoji: emojiSorteado, 
-        // A velocidade base é multiplicada pela dificuldade
         vel: (3 + Math.random() * 2) * dificuldadeMultiplicador,
         bad: isObstaculo
     });
@@ -114,7 +107,6 @@ function encerrarJogo() {
     salvarRanking(scorePartida);
     clearTimeout(spawnerId);
     
-    // Atualiza o texto da pontuação no HTML e exibe a tela de Game Over
     document.getElementById("pontuacao-final").innerText = scorePartida;
     document.getElementById("tela-game-over").style.display = "flex";
 }
@@ -133,14 +125,13 @@ function atualizarGame() {
             
             if (item.bad) {
                 gameOver = true;
-                encerrarJogo(); // Chama a função sem o setTimeout travado
+                encerrarJogo(); 
             } else {
                 scorePartida += 10;
                 
-                // SISTEMA DE DIFICULDADE: A cada 50 pontos, o jogo fica mais insano!
                 if (scorePartida % 50 === 0) {
-                    dificuldadeMultiplicador += 0.2; // Aumenta a velocidade de queda
-                    tempoDeSpawn = Math.max(300, tempoDeSpawn - 100); // Nascem mais rápido (limite máx de 300ms)
+                    dificuldadeMultiplicador += 0.2;
+                    tempoDeSpawn = Math.max(300, tempoDeSpawn - 100); 
                 }
             }
         }
@@ -169,12 +160,11 @@ function desenhar() {
 }
 
 function loop() {
-    if (gameOver) return; // Se bateu, para de redesenhar a tela
+    if (gameOver) return; 
     atualizarGame();
     desenhar();
     gameLoopId = requestAnimationFrame(loop);
 }
 
-// Renderiza a tela parada ao carregar a página
 desenhar();
 atualizarRanking();
