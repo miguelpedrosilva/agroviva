@@ -3,156 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroViva - Inteligência e Gestão Rural</title>
+    <title>AgroViva - Gestão Rural</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <div id="tela-entrada">
+    <section id="hero">
         <div class="overlay">
-            <h1>🚜 AgroViva</h1>
-            <p>Inteligência, Gestão e Sustentabilidade para o Campo</p>
-            <button id="btn-entrar">Entrar na Propriedade</button>
+            <img src="img/logo-agroviva.png" alt="Logo AgroViva" class="logo-hero">
+            <p class="hero-subtitle">Inteligência, Gestão e Sustentabilidade para o Campo</p>
+            <a href="#painel" class="btn-scroll">Explorar a Propriedade</a>
         </div>
-    </div>
+    </section>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <img src="img/logo-agroviva.png" alt="AgroViva" class="nav-logo">
+            <ul class="nav-links">
+                <li><a href="#painel">📊 Painel</a></li>
+                <li><a href="#ferramentas">⚙️ Ferramentas</a></li>
+                <li><a href="#mercado">📰 Mercado</a></li>
+                <li><a href="#jogo">🚜 MiniGame</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="painel" class="secao-branca">
+        <div class="container">
+            <h2 class="titulo-secao">Visão Geral da Fazenda</h2>
+            <div class="dashboard-grid">
+                <div class="card-dash">
+                    <p>🌦️ Clima Atual</p>
+                    <h3 id="clima-atual">Ideal</h3>
+                </div>
+                <div class="card-dash">
+                    <p>💰 Saldo em Caixa</p>
+                    <h3 id="saldo">R$ 0,00</h3>
+                </div>
+                <div class="card-dash">
+                    <p>🌱 Crédito de Carbono</p>
+                    <h3 id="carbono">0 t</h3>
+                </div>
+                <div class="card-dash destaque-pontos">
+                    <p>🏆 Seus Pontos</p>
+                    <h3 id="pontos">0</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ferramentas" class="secao-cinza">
+        <div class="container">
+            <h2 class="titulo-secao">Ferramentas Sustentáveis</h2>
+            <div class="grid-2-colunas">
+                
+                <div class="card-ferramenta">
+                    <h3>📊 Calculadora Financeira</h3>
+                    <input type="number" id="custos" placeholder="Custos de Produção (R$)">
+                    <input type="number" id="vendas" placeholder="Vendas Estimadas (R$)">
+                    <button id="btn-calcular">Calcular Viabilidade</button>
+                    <div id="resultado-financeiro" class="resultado-box"></div>
+                </div>
+
+                <div class="card-ferramenta">
+                    <h3>🌱 Mercado de Carbono</h3>
+                    <input type="number" id="area-carbono" placeholder="Área Protegida (hectares)">
+                    <select id="manejo">
+                        <option value="">Selecione o tipo de manejo...</option>
+                        <option value="tradicional">Manejo Tradicional</option>
+                        <option value="direto">Plantio Direto na Palha</option>
+                        <option value="ilpf">Sistema ILPF</option>
+                    </select>
+                    <button id="btn-carbono">Simular Créditos</button>
+                    <div id="resultado-carbono" class="resultado-box"></div>
+                </div>
+
+                <div class="card-ferramenta">
+                    <h3>🌦️ Simulador Climático</h3>
+                    <select id="clima-select">
+                        <option value="ideal">Condições Ideais</option>
+                        <option value="seca">Seca Severa</option>
+                        <option value="geada">Alerta de Geada</option>
+                        <option value="chuva">Excesso de Chuva</option>
+                    </select>
+                    <button id="btn-clima">Analisar Impacto</button>
+                    <div id="resultado-clima" class="resultado-box"></div>
+                </div>
+
+                <div class="card-ferramenta">
+                    <h3>🥒 Sensores de Estufa</h3>
+                    <input type="number" id="temperatura" placeholder="Temperatura Atual (°C)">
+                    <input type="number" id="umidade" placeholder="Umidade Atual (%)">
+                    <button id="btn-estufa">Verificar Ambiente</button>
+                    <div id="resultado-estufa" class="resultado-box"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mercado" class="secao-branca">
+        <div class="container">
+            <h2 class="titulo-secao">Mercado e Inteligência</h2>
+            
+            <div class="ceasa-container">
+                <h3>💰 Balcão CEASA (Ao Vivo)</h3>
+                <div id="tabela-ceasa"></div>
+                <p class="nota">Atualização via sistema de inteligência local.</p>
+            </div>
+
+            <h3 style="margin-top: 50px; color: var(--verde-principal);">📰 Notícias do Agro</h3>
+            <div id="lista-noticias" class="grid-3-colunas"></div>
+        </div>
+    </section>
+
+    <section id="jogo" class="secao-verde-escura">
+        <div class="container">
+            <h2 class="titulo-secao text-white">🚜 AgroViva Harvest & Ranking</h2>
+            <div class="grid-2-colunas">
+                
+                <div class="game-container">
+                    <p class="text-white">Colete alimentos, evite desperdícios e suba no ranking!</p>
+                    <h3 class="text-white" style="margin-bottom: 10px;">Pontuação: <span id="score">0</span></h3>
+                    <canvas id="gameCanvas" width="500" height="350"></canvas>
+                    <div id="controles-touch">
+                        <button id="btn-esquerda">◀ Esq</button>
+                        <button id="btn-direita">Dir ▶</button>
+                    </div>
+                </div>
+
+                <div class="ranking-container">
+                    <h3>🏆 Top Produtores (Local)</h3>
+                    <ol id="lista-ranking"></ol>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div id="assistente">
         <div id="chat-box">
-            <h3>🤖 AgroViva Assistente</h3>
+            <div class="chat-header">🤖 IA AgroViva</div>
             <div id="historico-ia"></div>
-            <p id="texto-ia">Olá produtor! Como posso ajudar hoje?</p>
-            <input type="text" id="pergunta-ia" placeholder="Pergunte sobre clima, saldo ou dicas...">
-            <button id="btn-perguntar">Perguntar</button>
+            <input type="text" id="pergunta-ia" placeholder="Dúvidas sobre o clima ou manejo?">
+            <button id="btn-perguntar">Enviar</button>
         </div>
     </div>
 
-    <header>
-        <h1>🚜 AgroViva</h1>
-        <p>Sistema Inteligente para Gestão Agrícola Sustentável</p>
-    </header>
-
-    <section class="dashboard">
-        <div class="card">
-            <p>🌦️ Clima Atual</p>
-            <h3 id="clima-atual">Ideal</h3>
-        </div>
-        <div class="card">
-            <p>💰 Saldo</p>
-            <h3 id="saldo">R$ 0,00</h3>
-        </div>
-        <div class="card">
-            <p>🌱 Carbono</p>
-            <h3 id="carbono">0 t</h3>
-        </div>
-        <div class="card">
-            <p>🏆 Pontos</p>
-            <h3 id="pontos">0</h3>
-        </div>
-    </section>
-
-    <nav>
-        <button class="aba ativa" data-aba="financeiro">📊 Financeiro</button>
-        <button class="aba" data-aba="carbono">🌱 Carbono</button>
-        <button class="aba" data-aba="clima">🌦️ Clima</button>
-        <button class="aba" data-aba="calendario">📅 Calendário</button>
-        <button class="aba" data-aba="estufas">🥒 Estufas</button>
-        <button class="aba" data-aba="ceasa">💰 CEASA</button>
-        <button class="aba" data-aba="noticias">📰 Notícias</button>
-        <button class="aba" data-aba="ranking">🏆 Ranking</button>
-        <button class="aba" data-aba="jogo">🚜 MiniGame</button>
-    </nav>
-
-    <section id="financeiro" class="conteudo ativa">
-        <h2>📊 Calculadora Financeira</h2>
-        <input type="number" id="custos" placeholder="Custos (R$)">
-        <input type="number" id="vendas" placeholder="Vendas Estimadas (R$)">
-        <button id="btn-calcular">Calcular Viabilidade</button>
-        <div id="resultado-financeiro"></div>
-    </section>
-
-    <section id="carbono" class="conteudo">
-        <h2>🌱 Mercado de Carbono</h2>
-        <input type="number" id="area-carbono" placeholder="Área em hectares">
-        <select id="manejo">
-            <option value="">Selecione o tipo de manejo</option>
-            <option value="tradicional">Tradicional</option>
-            <option value="direto">Plantio Direto (Sustentável)</option>
-            <option value="ilpf">Integração Lavoura-Pecuária-Floresta (ILPF)</option>
-        </select>
-        <button id="btn-carbono">Calcular Créditos</button>
-        <div id="resultado-carbono"></div>
-    </section>
-
-    <section id="clima" class="conteudo">
-        <h2>🌦️ Simulador Climático</h2>
-        <select id="clima-select">
-            <option value="ideal">Condição Ideal</option>
-            <option value="seca">Seca Severa</option>
-            <option value="geada">Alerta de Geada</option>
-            <option value="chuva">Excesso de Chuva</option>
-        </select>
-        <button id="btn-clima">Simular Impacto</button>
-        <div id="resultado-clima"></div>
-    </section>
-
-    <section id="calendario" class="conteudo">
-        <h2>📅 Calendário Agrícola Sustentável</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Cultura</th>
-                    <th>Plantio</th>
-                    <th>Colheita</th>
-                    <th>Dica Sustentável</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>🍅 Tomate</td><td>Agosto - Novembro</td><td>Novembro - Março</td><td>Use irrigação por gotejamento</td></tr>
-                <tr><td>🥒 Pepino</td><td>Agosto - Fevereiro</td><td>45 a 70 dias</td><td>Ideal para controle biológico em estufa</td></tr>
-                <tr><td>🥬 Alface</td><td>Ano Todo</td><td>30 a 50 dias</td><td>Faça rotação de culturas para nutrir o solo</td></tr>
-                <tr><td>🌽 Milho</td><td>Setembro - Dezembro</td><td>Janeiro - Abril</td><td>Palhada protege contra erosão</td></tr>
-                <tr><td>🌾 Soja</td><td>Setembro - Dezembro</td><td>Janeiro - Abril</td><td>Inoculação reduz necessidade de nitrogênio</td></tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section id="estufas" class="conteudo">
-        <h2>🥒 Gestão de Estufas (Sensores Simulados)</h2>
-        <input type="number" id="temperatura" placeholder="Temperatura (°C)">
-        <input type="number" id="umidade" placeholder="Umidade (%)">
-        <button id="btn-estufa">Analisar Ambiente</button>
-        <div id="resultado-estufa"></div>
-    </section>
-
-    <section id="ceasa" class="conteudo">
-        <h2>💰 Cotação de Mercado (Simulação Dinâmica)</h2>
-        <div id="tabela-ceasa"></div>
-        <p class="nota-rodape">⚡ Atualização automática (Simulação local em JS)</p>
-    </section>
-
-    <section id="noticias" class="conteudo">
-        <h2>📰 Agro Notícias (Destaques)</h2>
-        <div id="lista-noticias"></div>
-    </section>
-
-    <section id="ranking" class="conteudo">
-        <h2>🏆 Ranking AgroViva (Local)</h2>
-        <ol id="lista-ranking"></ol>
-    </section>
-
-    <section id="jogo" class="conteudo">
-        <h2>🚜 AgroViva Harvest</h2>
-        <p>Colete os alimentos e fuja do desperdício. Ganhe pontos para o ranking!</p>
-        <p>Pontuação: <span id="score">0</span></p>
-        <canvas id="gameCanvas" width="800" height="400"></canvas>
-        <div id="controles-touch">
-            <button id="btn-esquerda">◀ Esquerda</button>
-            <button id="btn-direita">Direita ▶</button>
-        </div>
-    </section>
-
     <footer>
-        <p>AgroViva © 2026 - Projeto Concurso Agrinho (Subcategoria 3: Front-End)</p>
+        <p>AgroViva © 2026 - Concurso Agrinho (Subcategoria 3: Front-End)</p>
     </footer>
 
     <script src="js/script.js"></script>
