@@ -22,7 +22,7 @@
         </div>
     </nav>
 
-    <header id="inicio" class="hero-app" style="background-image: linear-gradient(to bottom, rgba(10,25,16,0.1) 40%, rgba(10,25,16,0.9) 100%), url('img/hero-plataforma.jpg');">
+    <header id="inicio" class="hero-app" style="background-image: linear-gradient(to bottom, rgba(10,25,16,0.1) 40%, rgba(10,25,16,0.95) 100%), url('img/hero-plataforma.jpg');">
         <div class="hero-content">
             <span class="badge-agrinho">AGRINHO 2026</span>
             <h1>Guia Tecnológico Contra o Prejuízo</h1>
@@ -59,16 +59,22 @@
     <section id="configuracao" class="secao-verde-escura text-center">
         <div class="container config-box">
             <h2 class="text-white mb-20">Passo 1: Configure sua Produção</h2>
-            <p class="text-white mb-20">Para simularmos os cenários, precisamos saber o que você produz.</p>
+            <p class="text-white mb-20">Para simularmos os cenários, informe os dados da sua propriedade rural.</p>
             
             <div class="form-setup">
-                <input type="text" id="nome-fazenda-input" placeholder="Digite o nome da sua Fazenda (Ex: Fazenda Esperança)">
+                <input type="text" id="nome-fazenda-input" placeholder="Nome da sua Fazenda (Ex: Fazenda São João)">
                 <select id="cultura-input" class="select-moderno">
                     <option value="">Selecione a cultura principal...</option>
-                    <option value="Soja">🌾 Soja (Commodity)</option>
-                    <option value="Milho">🌽 Milho (Safrinha)</option>
-                    <option value="Hortaliças">🍅 Hortaliças (Estufa)</option>
-                    <option value="Trigo">🌾 Trigo (Inverno)</option>
+                    <option value="Soja">Soja</option>
+                    <option value="Milho">Milho</option>
+                    <option value="Feijão">Feijão</option>
+                    <option value="Trigo">Trigo</option>
+                    <option value="Café">Café</option>
+                    <option value="Cana-de-açúcar">Cana-de-açúcar</option>
+                    <option value="Hortaliças">Hortaliças e Legumes</option>
+                    <option value="Fruticultura">Fruticultura</option>
+                    <option value="Pecuária de Leite">Pecuária de Leite</option>
+                    <option value="Pecuária de Corte">Pecuária de Corte</option>
                 </select>
                 <button id="btn-iniciar-gestao" class="btn-glowing">Iniciar Gestão Inteligente</button>
             </div>
@@ -78,7 +84,7 @@
     <section id="dashboard" class="secao-cinza" style="display:none;">
         <div class="container">
             <h2 class="titulo-secao text-center">Visão Geral: <span id="display-nome-fazenda" class="cor-sucesso">Sua Fazenda</span></h2>
-            <p class="text-center texto-apoio mb-20">Cultura Monitorada: <strong id="display-cultura">Nenhuma</strong></p>
+            <p class="text-center texto-apoio mb-20">Atividade Monitorada: <strong id="display-cultura">Nenhuma</strong></p>
             
             <div class="grid-4-colunas">
                 <div class="card-dash">
@@ -94,7 +100,7 @@
                     <h3 id="carbono">0.00 t</h3>
                 </div>
                 <div class="card-dash card-destaque">
-                    <span>Score de Sustentabilidade</span>
+                    <span>Score Sustentável</span>
                     <h3 id="pontos">0</h3>
                 </div>
             </div>
@@ -105,10 +111,13 @@
                 <div class="card-ferramenta premium-card">
                     <div class="ferramenta-header">
                         <img src="img/icon-financeiro.png" alt="Ícone Financeiro" class="icon-3d">
-                        <h3>Viabilidade Financeira</h3>
+                        <div>
+                            <h3>Viabilidade Financeira</h3>
+                            <p class="desc-ferramenta">Calcule a margem de lucro projetada subtraindo os custos de operação da receita esperada.</p>
+                        </div>
                     </div>
-                    <input type="number" id="custos" placeholder="Custos Totais da Safra (R$)">
-                    <input type="number" id="vendas" placeholder="Receita Estimada da Safra (R$)">
+                    <input type="number" id="custos" placeholder="Custos Totais (R$)">
+                    <input type="number" id="vendas" placeholder="Receita Estimada (R$)">
                     <button id="btn-calcular" class="btn-acao">Gerar Relatório</button>
                     <div id="resultado-financeiro" class="resultado-box"></div>
                 </div>
@@ -116,12 +125,15 @@
                 <div class="card-ferramenta premium-card">
                     <div class="ferramenta-header">
                         <img src="img/icon-carbono.png" alt="Ícone Carbono" class="icon-3d">
-                        <h3>Mercado de Carbono</h3>
+                        <div>
+                            <h3>Mercado de Carbono</h3>
+                            <p class="desc-ferramenta">Descubra quantos créditos de carbono sua fazenda pode gerar adotando práticas sustentáveis.</p>
+                        </div>
                     </div>
                     <input type="number" id="area-carbono" placeholder="Área Mapeada (hectares)">
                     <select id="manejo" class="select-moderno">
-                        <option value="">Selecione a técnica de plantio...</option>
-                        <option value="tradicional">Plantio Convencional</option>
+                        <option value="">Selecione a técnica de manejo...</option>
+                        <option value="tradicional">Manejo Convencional</option>
                         <option value="direto">Plantio Direto na Palha</option>
                         <option value="ilpf">Sistema ILPF Integrado</option>
                     </select>
@@ -132,11 +144,14 @@
                 <div class="card-ferramenta premium-card">
                     <div class="ferramenta-header">
                         <img src="img/icon-clima.png" alt="Ícone Clima" class="icon-3d">
-                        <h3>Simulador Climático</h3>
+                        <div>
+                            <h3>Simulador Climático</h3>
+                            <p class="desc-ferramenta">Simule cenários climáticos adversos e receba recomendações preventivas para a sua cultura.</p>
+                        </div>
                     </div>
                     <select id="clima-select" class="select-moderno">
                         <option value="ideal">Condições Climáticas Ideais</option>
-                        <option value="seca">Déficit Hídrico (Seca)</option>
+                        <option value="seca">Déficit Hídrico (Seca Severa)</option>
                         <option value="geada">Alerta de Frente Fria (Geada)</option>
                         <option value="chuva">Precipitação Extrema</option>
                     </select>
@@ -147,7 +162,10 @@
                 <div class="card-ferramenta premium-card">
                     <div class="ferramenta-header">
                         <img src="img/icon-estufa.png" alt="Ícone Estufa" class="icon-3d">
-                        <h3>Sensores de Campo/Estufa</h3>
+                        <div>
+                            <h3>Sensores e Biometria</h3>
+                            <p class="desc-ferramenta">Insira os dados lidos pelos sensores da sua estufa ou campo para um diagnóstico imediato.</p>
+                        </div>
                     </div>
                     <input type="number" id="temperatura" placeholder="Temperatura Atual (°C)">
                     <input type="number" id="umidade" placeholder="Umidade Relativa (%)">
@@ -168,18 +186,27 @@
 
     <section id="jogo" class="secao-cinza">
         <div class="container text-center">
-            <h2 class="titulo-secao">AgroViva Harvest</h2>
-            <p class="mb-20">Desvie das pedras e troncos (obstáculos). Colete os alimentos e some pontos para o ranking local!</p>
+            <h2 class="titulo-secao">Desafio Colheita AgroViva</h2>
+            <p class="mb-20 texto-apoio">Desvie dos obstáculos e recolha a produção. Prove que você é um produtor de elite e entre para o Top 3!</p>
+            
             <div class="game-wrapper">
+                
+                <div id="tela-start-jogo" class="overlay-jogo">
+                    <h3>Pronto para o campo?</h3>
+                    <input type="text" id="nome-jogador" placeholder="Digite seu nome...">
+                    <button id="btn-play" class="btn-glowing">▶ Dar a Partida</button>
+                </div>
+
                 <canvas id="gameCanvas" width="600" height="350"></canvas>
+                
                 <div class="controles-mobile mt-20">
-                    <button id="btn-esquerda" class="btn-jogo">◀ Esquerda</button>
-                    <button id="btn-direita" class="btn-jogo">Direita ▶</button>
+                    <button id="btn-esquerda" class="btn-jogo">◀ Esq</button>
+                    <button id="btn-direita" class="btn-jogo">Dir ▶</button>
                 </div>
             </div>
             
             <div class="ranking-container mt-40">
-                <h3>🏆 Top Produtores (Local)</h3>
+                <h3>🏆 Top 3 Produtores (Local)</h3>
                 <ol id="lista-ranking"></ol>
             </div>
         </div>
