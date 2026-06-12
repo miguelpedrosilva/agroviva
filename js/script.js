@@ -1,5 +1,5 @@
 /* ==================================================
-   AGROVIVA - SCRIPT.JS (Lógica Pura de Setup)
+   AGROVIVA - SCRIPT.JS (Lógica Front-End)
    ================================================== */
 
 const estado = { 
