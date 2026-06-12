@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>AgroViva - Inteligência e Gestão Rural</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,332 +14,205 @@
     <div id="tela-entrada">
         <div class="overlay">
             <h1>🚜 AgroViva</h1>
-
-            <p>
-                Inteligência, Gestão e Sustentabilidade para o Campo
-            </p>
-
-            <button id="btn-entrar">
-                Entrar na Propriedade
-            </button>
+            <p>Inteligência, Gestão e Sustentabilidade para o Campo</p>
+            <button id="btn-entrar">Entrar na Propriedade</button>
         </div>
     </div>
 
     <!-- ASSISTENTE IA -->
     <div id="assistente">
         <div id="chat-box">
-
             <h3>🤖 AgroViva IA</h3>
-
-            <p id="texto-ia">
-                Olá produtor! Como posso ajudar hoje?
-            </p>
-
-            <input
-                type="text"
-                id="pergunta-ia"
-                placeholder="Pergunte sobre clima, plantio ou mercado">
-
-            <button id="btn-perguntar">
-                Perguntar
-            </button>
-
+            <div id="historico-ia"></div>
+            <p id="texto-ia">Olá produtor! Como posso ajudar hoje?</p>
+            <input type="text" id="pergunta-ia" placeholder="Pergunte sobre clima, plantio ou mercado">
+            <button id="btn-perguntar">Perguntar</button>
         </div>
     </div>
 
     <!-- CABEÇALHO -->
     <header>
         <h1>🚜 AgroViva</h1>
-
-        <p>
-            Sistema Inteligente para Gestão Agrícola
-        </p>
+        <p>Sistema Inteligente para Gestão Agrícola</p>
     </header>
 
     <!-- DASHBOARD -->
     <section class="dashboard">
-
         <div class="card">
             <p>🌦️ Clima Atual</p>
             <h3 id="clima-atual">Ideal</h3>
         </div>
-
         <div class="card">
             <p>💰 Saldo</p>
             <h3 id="saldo">R$ 0,00</h3>
         </div>
-
         <div class="card">
             <p>🌱 Carbono</p>
             <h3 id="carbono">0 t</h3>
         </div>
-
         <div class="card">
             <p>🏆 Pontos</p>
             <h3 id="pontos">0</h3>
         </div>
-
     </section>
 
     <!-- MENU -->
     <nav>
-
-        <button class="aba ativa" data-aba="financeiro">
-            📊 Financeiro
-        </button>
-
-        <button class="aba" data-aba="carbono">
-            🌱 Carbono
-        </button>
-
-        <button class="aba" data-aba="clima">
-            🌦️ Clima
-        </button>
-
-        <button class="aba" data-aba="calendario">
-            📅 Calendário
-        </button>
-
-        <button class="aba" data-aba="estufas">
-            🥒 Estufas
-        </button>
-
-        <button class="aba" data-aba="noticias">
-            📰 Notícias
-        </button>
-
-        <button class="aba" data-aba="ranking">
-            🏆 Ranking
-        </button>
-
-        <button class="aba" data-aba="jogo">
-            🚜 MiniGame
-        </button>
-
+        <button class="aba ativa" data-aba="financeiro">📊 Financeiro</button>
+        <button class="aba" data-aba="carbono">🌱 Carbono</button>
+        <button class="aba" data-aba="clima">🌦️ Clima</button>
+        <button class="aba" data-aba="calendario">📅 Calendário</button>
+        <button class="aba" data-aba="estufas">🥒 Estufas</button>
+        <button class="aba" data-aba="ceasa">💰 CEASA</button>
+        <button class="aba" data-aba="noticias">📰 Notícias</button>
+        <button class="aba" data-aba="ranking">🏆 Ranking</button>
+        <button class="aba" data-aba="jogo">🚜 MiniGame</button>
     </nav>
 
     <!-- FINANCEIRO -->
     <section id="financeiro" class="conteudo ativa">
-
         <h2>📊 Calculadora Financeira</h2>
-
-        <input
-            type="number"
-            id="custos"
-            placeholder="Custos">
-
-        <input
-            type="number"
-            id="vendas"
-            placeholder="Vendas">
-
-        <button id="btn-calcular">
-            Calcular
-        </button>
-
+        <input type="number" id="custos" placeholder="Custos (R$)">
+        <input type="number" id="vendas" placeholder="Vendas (R$)">
+        <button id="btn-calcular">Calcular</button>
         <div id="resultado-financeiro"></div>
-
     </section>
 
     <!-- CARBONO -->
     <section id="carbono" class="conteudo">
-
         <h2>🌱 Mercado de Carbono</h2>
-
-        <input
-            type="number"
-            id="area-carbono"
-            placeholder="Área em hectares">
-
+        <input type="number" id="area-carbono" placeholder="Área em hectares">
         <select id="manejo">
-            <option value="">
-                Selecione
-            </option>
-
-            <option value="tradicional">
-                Tradicional
-            </option>
-
-            <option value="direto">
-                Plantio Direto
-            </option>
-
-            <option value="ilpf">
-                ILPF
-            </option>
+            <option value="">Selecione</option>
+            <option value="tradicional">Tradicional</option>
+            <option value="direto">Plantio Direto</option>
+            <option value="ilpf">ILPF</option>
         </select>
-
-        <button id="btn-carbono">
-            Calcular Carbono
-        </button>
-
+        <button id="btn-carbono">Calcular Carbono</button>
         <div id="resultado-carbono"></div>
-
     </section>
 
     <!-- CLIMA -->
     <section id="clima" class="conteudo">
-
         <h2>🌦️ Simulador Climático</h2>
-
         <select id="clima-select">
             <option value="ideal">Ideal</option>
             <option value="seca">Seca</option>
             <option value="geada">Geada</option>
+            <option value="chuva">Excesso de Chuva</option>
         </select>
-
-        <button id="btn-clima">
-            Simular
-        </button>
-
+        <button id="btn-clima">Simular</button>
         <div id="resultado-clima"></div>
-
     </section>
 
     <!-- CALENDÁRIO -->
     <section id="calendario" class="conteudo">
-
         <h2>📅 Calendário Agrícola</h2>
-
         <table>
-
             <thead>
                 <tr>
                     <th>Cultura</th>
                     <th>Plantio</th>
                     <th>Colheita</th>
+                    <th>Dica</th>
                 </tr>
             </thead>
-
             <tbody>
-
                 <tr>
                     <td>🍅 Tomate</td>
                     <td>Agosto - Novembro</td>
                     <td>Novembro - Março</td>
+                    <td>Evitar geadas</td>
                 </tr>
-
                 <tr>
                     <td>🥒 Pepino</td>
                     <td>Agosto - Fevereiro</td>
                     <td>45 a 70 dias</td>
+                    <td>Ótimo para estufas</td>
                 </tr>
-
                 <tr>
                     <td>🥬 Alface</td>
                     <td>Ano Todo</td>
                     <td>30 a 50 dias</td>
+                    <td>Prefere clima ameno</td>
                 </tr>
-
                 <tr>
                     <td>🌽 Milho</td>
                     <td>Setembro - Dezembro</td>
                     <td>Janeiro - Abril</td>
+                    <td>Necessita boa irrigação</td>
                 </tr>
-
                 <tr>
                     <td>🌾 Soja</td>
                     <td>Setembro - Dezembro</td>
                     <td>Janeiro - Abril</td>
+                    <td>Monitorar ferrugem</td>
                 </tr>
-
             </tbody>
-
         </table>
-
     </section>
 
     <!-- ESTUFAS -->
     <section id="estufas" class="conteudo">
-
         <h2>🥒 Gestão de Estufas</h2>
-
-        <input
-            type="number"
-            id="temperatura"
-            placeholder="Temperatura">
-
-        <input
-            type="number"
-            id="umidade"
-            placeholder="Umidade">
-
-        <button id="btn-estufa">
-            Analisar
-        </button>
-
+        <input type="number" id="temperatura" placeholder="Temperatura (°C)">
+        <input type="number" id="umidade" placeholder="Umidade (%)">
+        <button id="btn-estufa">Analisar</button>
         <div id="resultado-estufa"></div>
+    </section>
 
+    <!-- COTAÇÃO CEASA -->
+    <section id="ceasa" class="conteudo">
+        <h2>💰 Cotação CEASA</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+            <p id="ceasa-status" style="color:#888; font-size:.9rem;">🔄 Carregando cotações...</p>
+            <button onclick="atualizarCotacoesComIA()" style="padding:8px 18px; border-radius:8px; font-size:.9rem; font-weight:bold;">
+                🔄 Atualizar agora
+            </button>
+        </div>
+        <div id="tabela-ceasa"></div>
+        <p style="font-size:.75rem; color:#aaa; margin-top:12px;">
+            ⚡ Atualização automática a cada 30s (local) e a cada 5 min via IA • Preços simulados de referência
+        </p>
     </section>
 
     <!-- NOTÍCIAS -->
     <section id="noticias" class="conteudo">
-
         <h2>📰 Agro Notícias</h2>
-
-        <div id="lista-noticias">
-
-            <div class="noticia">
-                🌾 Mercado da soja em alta.
-            </div>
-
-            <div class="noticia">
-                🌽 Milho safrinha apresenta crescimento.
-            </div>
-
-            <div class="noticia">
-                🥬 Hortaliças valorizadas no Paraná.
-            </div>
-
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+            <p id="noticias-status" style="color:#888; font-size:.9rem;">🔄 Carregando notícias...</p>
+            <button onclick="atualizarNoticiasComIA()" style="padding:8px 18px; border-radius:8px; font-size:.9rem; font-weight:bold;">🔄 Atualizar agora</button>
         </div>
-
+        <div id="lista-noticias"></div>
+        <p style="font-size:.75rem; color:#aaa; margin-top:12px;">⚡ Notícias geradas por IA • Atualização automática a cada 10 minutos</p>
     </section>
 
     <!-- RANKING -->
     <section id="ranking" class="conteudo">
-
         <h2>🏆 Ranking AgroViva</h2>
-
-        <ol>
-            <li>Pedro - 1500 pts</li>
-            <li>Maria - 1200 pts</li>
-            <li>João - 950 pts</li>
-        </ol>
-
+        <ol id="lista-ranking"></ol>
     </section>
 
     <!-- MINIGAME -->
     <section id="jogo" class="conteudo">
-
         <h2>🚜 AgroViva Harvest</h2>
-
-        <canvas
-            id="gameCanvas"
-            width="800"
-            height="400">
-        </canvas>
-
-        <p>
-            Colete tomate, pepino, alface, milho e leite.
-        </p>
-
-        <p>
-            Pontuação:
-            <span id="score">0</span>
-        </p>
-
+        <p>Colete tomate, pepino, alface, milho e leite.</p>
+        <p>Pontuação: <span id="score">0</span></p>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <!-- Controles touch para celular -->
+        <div id="controles-touch">
+            <button id="btn-esquerda">◀ Esquerda</button>
+            <button id="btn-direita">Direita ▶</button>
+        </div>
     </section>
 
     <!-- RODAPÉ -->
     <footer>
-        <p>
-            AgroViva © 2026 - Concurso Agrinho
-        </p>
+        <p>AgroViva © 2026 - Concurso Agrinho</p>
     </footer>
 
     <script src="script.js"></script>
     <script src="minigame.js"></script>
 
 </body>
-
 </html>
