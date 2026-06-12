@@ -11,7 +11,6 @@ const estado = {
     pontos: 0 
 };
 
-// LÓGICA DE CONFIGURAÇÃO INICIAL
 document.querySelector("#btn-iniciar-gestao")?.addEventListener("click", () => {
     const nome = document.querySelector("#nome-fazenda-input").value;
     const cultura = document.querySelector("#cultura-input").value;
@@ -24,15 +23,12 @@ document.querySelector("#btn-iniciar-gestao")?.addEventListener("click", () => {
     estado.fazenda = nome;
     estado.cultura = cultura;
 
-    // Atualiza nomes na tela
     document.querySelector("#display-nome-fazenda").innerText = estado.fazenda;
     document.querySelector("#display-cultura").innerText = estado.cultura;
 
-    // Mostra o dashboard escondido
     const dashboard = document.querySelector("#dashboard");
     dashboard.style.display = "block";
 
-    // Rola suavemente para o dashboard
     dashboard.scrollIntoView({ behavior: "smooth" });
     atualizarDashboard();
 });
@@ -49,7 +45,6 @@ function atualizarDashboard() {
     if(elPontos) elPontos.innerText = estado.pontos;
 }
 
-// FERRAMENTAS INTELIGENTES
 document.querySelector("#btn-calcular")?.addEventListener("click", () => {
     const custos = parseFloat(document.querySelector("#custos").value) || 0;
     const vendas = parseFloat(document.querySelector("#vendas").value) || 0;
@@ -77,7 +72,7 @@ document.querySelector("#btn-carbono")?.addEventListener("click", () => {
     
     const res = document.querySelector("#resultado-carbono");
     res.style.display = "block";
-    res.innerHTML = `✅ <strong>${carbonoGerado.toFixed(2)} t</strong> de CO2 retidas com a técnica selecionada. Créditos aplicados!`;
+    res.innerHTML = `✅ <strong>${carbonoGerado.toFixed(2)} t</strong> de CO2 retidas. Créditos aplicados!`;
 });
 
 document.querySelector("#btn-clima")?.addEventListener("click", () => {
@@ -107,7 +102,6 @@ document.querySelector("#btn-estufa")?.addEventListener("click", () => {
     else res.innerHTML = "✅ Parâmetros perfeitos para controle do ambiente.";
 });
 
-// RENDERIZAR NOTÍCIAS DINÂMICAS
 const noticiasData = [
     { img: "img/noticia-soja.jpg", titulo: "Mercado Agrícola Digital", texto: "Plataformas otimizam a venda direta de grãos, aumentando a margem do produtor." },
     { img: "img/noticia-tecnologia.jpg", titulo: "Agricultura de Precisão", texto: "Sensores IoT nas lavouras do Paraná ajudam a combater pragas rapidamente." },
@@ -127,5 +121,4 @@ if (containerNoticias) {
     `).join("");
 }
 
-// Inicia com valores zerados
 atualizarDashboard();
