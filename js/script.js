@@ -1,5 +1,5 @@
 /* ==================================================
-   AGROVIVA - SCRIPT.JS (Lógica Front-End Pura)
+   AGROVIVA - SCRIPT.JS (Página Única)
    ================================================== */
 
 const estado = { saldo: 0, carbono: 0, clima: "Ideal", pontos: 0 };
@@ -18,12 +18,6 @@ function adicionarPontos(qtd) {
     atualizarRanking();
 }
 
-const telaEntrada = document.querySelector("#tela-entrada");
-document.querySelector("#btn-entrar")?.addEventListener("click", () => {
-    telaEntrada.style.opacity = "0";
-    setTimeout(() => telaEntrada.style.display = "none", 600);
-});
-
 function atualizarDashboard() {
     document.querySelector("#saldo").innerText = `R$ ${estado.saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
     document.querySelector("#carbono").innerText = `${estado.carbono.toFixed(2)} t`;
@@ -31,72 +25,81 @@ function atualizarDashboard() {
     document.querySelector("#pontos").innerText = estado.pontos;
 }
 
-// Navegação de Abas
-const abas = document.querySelectorAll(".aba");
-const conteudos = document.querySelectorAll(".conteudo");
-abas.forEach(botao => {
-    botao.addEventListener("click", () => {
-        abas.forEach(a => a.classList.remove("ativa"));
-        conteudos.forEach(c => c.classList.remove("ativa"));
-        botao.classList.add("ativa");
-        document.querySelector("#" + botao.dataset.aba).classList.add("ativa");
-    });
-});
-
 // Calculadora Financeira
-document.querySelector("#btn-calcular")?.addEventListener("click", () => {
+document.querySelector("#btn-calcular").addEventListener("click", () => {
     const custos = parseFloat(document.querySelector("#custos").value) || 0;
     const vendas = parseFloat(document.querySelector("#vendas").value) || 0;
     const lucro = vendas - custos;
     estado.saldo += lucro;
     adicionarPontos(15);
     atualizarDashboard();
-    document.querySelector("#resultado-financeiro").innerHTML = `
-        <p><strong>Lucro Estimado:</strong> R$ ${lucro.toFixed(2)}</p>
-        <p><em>${lucro > 0 ? '✅ Operação Sustentável' : '⚠️ Alerta de Prejuízo'}</em></p>
+    
+    const res = document.querySelector("#resultado-financeiro");
+    res.style.display = "block";
+    res.innerHTML = `
+        <p><strong>Lucro Projetado:</strong> R$ ${lucro.toFixed(2)}</p>
+        <p style="color: ${lucro > 0 ? 'green' : 'red'}; mt-2">${lucro > 0 ? '✅ Safra Lucrativa' : '⚠️ Revisar Custos'}</p>
     `;
 });
 
 // Mercado de Carbono
-document.querySelector("#btn-carbono")?.addEventListener("click", () => {
+document.querySelector("#btn-carbono").addEventListener("click", () => {
     const area = parseFloat(document.querySelector("#area-carbono").value) || 0;
     const manejo = document.querySelector("#manejo").value;
     let fator = manejo === "ilpf" ? 4.2 : manejo === "direto" ? 2.5 : 1.1;
     
     const carbonoGerado = area * fator;
     estado.carbono += carbonoGerado;
-    estado.saldo += (carbonoGerado * 80); // R$ 80 por tonelada
+    estado.saldo += (carbonoGerado * 80); 
     adicionarPontos(30);
     atualizarDashboard();
-    document.querySelector("#resultado-carbono").innerHTML = `<p>✅ <strong>${carbonoGerado.toFixed(2)} t</strong> de carbono retidas. Saldo atualizado!</p>`;
+    
+    const res = document.querySelector("#resultado-carbono");
+    res.style.display = "block";
+    res.innerHTML = `<p>✅ <strong>${carbonoGerado.toFixed(2)} t</strong> de CO2 retidas. Créditos adicionados ao saldo!</p>`;
 });
 
 // Simulador Climático
-document.querySelector("#btn-clima")?.addEventListener("click", () => {
+document.querySelector("#btn-clima").addEventListener("click", () => {
     const clima = document.querySelector("#clima-select").value;
     const efeitos = {
-        ideal: { texto: "Clima perfeito! Produtividade alta.", pts: 10, exibe: "Ideal" },
-        seca: { texto: "Alerta hídrico. Acione a irrigação.", pts: -5, exibe: "Seca" },
-        geada: { texto: "Perigo iminente. Proteja a lavoura.", pts: -10, exibe: "Geada" },
-        chuva: { texto: "Risco de fungos. Monitore as folhas.", pts: -5, exibe: "Chuva Extrema" }
+        ideal: { texto: "Clima perfeito! Janela de plantio aberta.", pts: 10, exibe: "Ideal" },
+        seca: { texto: "Atenção: Ative o sistema de irrigação inteligente.", pts: -5, exibe: "Seca" },
+        geada: { texto: "Perigo: Cubra as mudas e proteja as estufas.", pts: -10, exibe: "Geada" },
+        chuva: { texto: "Risco de fungos. Inspecione a drenagem do solo.", pts: -5, exibe: "Chuva" }
     };
     estado.clima = efeitos[clima].exibe;
     adicionarPontos(efeitos[clima].pts);
-    document.querySelector("#resultado-clima").innerHTML = `<p><strong>Previsão:</strong> ${efeitos[clima].texto}</p>`;
+    atualizarDashboard();
+    
+    const res = document.querySelector("#resultado-clima");
+    res.style.display = "block";
+    res.innerHTML = `<p><strong>Previsão:</strong> ${efeitos[clima].texto}</p>`;
 });
 
-// CEASA Local (Simulação Dinâmica com Arrays JS)
+// Gestão de Estufas
+document.querySelector("#btn-estufa").addEventListener("click", () => {
+    const temp = parseFloat(document.querySelector("#temperatura").value) || 0;
+    const res = document.querySelector("#resultado-estufa");
+    res.style.display = "block";
+    if(temp > 30) res.innerHTML = "🔥 Muito quente! Ligando exaustores.";
+    else if(temp < 15) res.innerHTML = "❄️ Frio extremo! Ligando aquecimento.";
+    else res.innerHTML = "✅ Ambiente perfeitamente controlado.";
+});
+
+// CEASA Local Dinâmico
 let produtos = [
     { emoji: "🍅", nome: "Tomate", preco: 4.50 }, { emoji: "🌽", nome: "Milho", preco: 1.20 },
-    { emoji: "🌾", nome: "Soja", preco: 3.80 }, { emoji: "🥬", nome: "Alface", preco: 2.00 }
+    { emoji: "🌾", nome: "Soja", preco: 3.80 }, { emoji: "🥬", nome: "Alface", preco: 2.00 },
+    { emoji: "🥛", nome: "Leite", preco: 2.50 }, { emoji: "🥩", nome: "Bovino", preco: 18.90 }
 ];
 
 function atualizarCEASA() {
-    produtos.forEach(p => { p.preco += (Math.random() - 0.45) * 0.2; });
+    produtos.forEach(p => { p.preco += (Math.random() - 0.45) * 0.3; });
     document.querySelector("#tabela-ceasa").innerHTML = `<div class="ceasa-grid">` + 
         produtos.map(p => `
             <div class="ceasa-card">
-                <div class="emoji">${p.emoji}</div>
+                <div style="font-size: 2rem;">${p.emoji}</div>
                 <div>${p.nome}</div>
                 <div class="preco">R$ ${Math.max(0.5, p.preco).toFixed(2)}</div>
             </div>
@@ -105,21 +108,28 @@ function atualizarCEASA() {
 setInterval(atualizarCEASA, 5000);
 atualizarCEASA();
 
-// Notícias Estáticas com Imagens IA
+// 6 NOTÍCIAS DINÂMICAS 
 const noticias = [
-    { img: "img/noticia-soja.jpg", titulo: "Mercado de Grãos Dispara", texto: "Alta tecnologia impulsiona o mercado agrícola no Sul." },
-    { img: "img/noticia-tecnologia.jpg", titulo: "Sensores no Campo", texto: "A revolução dos dados na prevenção de perdas de safra." },
-    { img: "img/noticia-estufa.jpg", titulo: "Estufas Inteligentes", texto: "Produção hidropônica reduz o uso de água em 80%." }
+    { img: "img/noticia-soja.jpg", titulo: "Soja Bate Recorde", texto: "Tecnologia de precisão aumenta produtividade na região sul do Brasil em 15%." },
+    { img: "img/noticia-tecnologia.jpg", titulo: "Sensores Salivam Safra", texto: "Rede de dados previne pragas antes mesmo delas atacarem as raízes." },
+    { img: "img/noticia-estufa.jpg", titulo: "Revolução nas Estufas", texto: "Iluminação de LED otimiza fotossíntese de hortaliças reduzindo custos." },
+    { img: "img/noticia-soja.jpg", titulo: "Mercado de Carbono", texto: "Produtores rurais lucram transformando fazendas em sumidouros de CO2." },
+    { img: "img/noticia-tecnologia.jpg", titulo: "Drones Pulverizadores", texto: "Nova frota de drones mapeia e aplica defensivos com precisão milimétrica." },
+    { img: "img/noticia-estufa.jpg", titulo: "Gestão Hídrica", texto: "Fazendas do Paraná reaproveitam 100% da água da chuva em sistemas fechados." }
 ];
+
 document.querySelector("#lista-noticias").innerHTML = noticias.map(n => `
-    <div class="noticia">
-        <img src="${n.img}" class="img-noticia" alt="Imagem Notícia">
-        <div><h3 style="color:var(--verde-principal)">${n.titulo}</h3><p>${n.texto}</p></div>
+    <div class="noticia-card">
+        <img src="${n.img}" class="noticia-img" alt="Notícia AgroViva">
+        <div class="noticia-conteudo">
+            <h4>${n.titulo}</h4>
+            <p>${n.texto}</p>
+        </div>
     </div>
 `).join("");
 
-// Assistente IA Local Baseado em Regras (Sem API externa)
-document.querySelector("#btn-perguntar")?.addEventListener("click", () => {
+// IA Assistente
+document.querySelector("#btn-perguntar").addEventListener("click", () => {
     const input = document.querySelector("#pergunta-ia");
     const pergunta = input.value.toLowerCase();
     if(!pergunta) return;
@@ -129,19 +139,17 @@ document.querySelector("#btn-perguntar")?.addEventListener("click", () => {
     input.value = "";
 
     setTimeout(() => {
-        let resposta = "Sou o assistente AgroViva! Posso ajudar com dicas sobre seu clima, seu saldo ou plantio sustentável.";
-        if (pergunta.includes("clima")) resposta = `No momento, enfrentamos condições de ${estado.clima}. Recomendo verificar o calendário agrícola para culturas resistentes.`;
-        if (pergunta.includes("saldo") || pergunta.includes("dinheiro")) resposta = `Seu caixa atual é de R$ ${estado.saldo.toFixed(2)}. Invista no Mercado de Carbono para aumentar os lucros!`;
-        if (pergunta.includes("dica") || pergunta.includes("plantar")) resposta = `Dica de Ouro: O sistema ILPF (Integração Lavoura-Pecuária-Floresta) gera mais créditos de carbono e protege o solo!`;
-
+        let resposta = "🤖 Olá! Verifique o painel para ver as cotações em tempo real e simule seu lucro nas ferramentas acima.";
+        if (pergunta.includes("clima") || pergunta.includes("chuva")) resposta = `🌤️ O clima atual da sua fazenda está registrado como: ${estado.clima}.`;
+        if (pergunta.includes("saldo") || pergunta.includes("dinheiro")) resposta = `💰 Você tem R$ ${estado.saldo.toFixed(2)} em caixa.`;
         hist.innerHTML += `<div class="msg-ia">${resposta}</div>`;
         hist.scrollTop = hist.scrollHeight;
-    }, 600);
+    }, 700);
 });
 
-// Ranking Local Storage
+// Ranking Local
 function atualizarRanking() {
-    let ranking = JSON.parse(localStorage.getItem('rankingAgro')) || [{nome: "Fazenda Modelo", pontos: 500}];
-    document.querySelector("#lista-ranking").innerHTML = ranking.slice(0,5).map((r, i) => `<li>${i+1}º ${r.nome} - <strong>${r.pontos} pts</strong></li>`).join("");
+    let ranking = JSON.parse(localStorage.getItem('rankingAgro')) || [{nome: "Fazenda Elite", pontos: 800}];
+    document.querySelector("#lista-ranking").innerHTML = ranking.slice(0,5).map((r, i) => `<li>${i+1}º ${r.nome} <span>${r.pontos} pts</span></li>`).join("");
 }
 atualizarRanking();
